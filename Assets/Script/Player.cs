@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public Rigidbody2D rb;
     Vector2 movement;
     float rotation;
+    public PolygonCollider2D polygonCollider;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,12 +23,13 @@ public class Player : MonoBehaviour
 
         movement.y = Input.GetAxis("Vertical");
         rotation = Input.GetAxis("Horizontal");
-        Debug.Log(rb.rotation);
-        if (rotation != 0 )
+
+        if (rotation != 0)
         {
             rb.rotation = Mathf.Clamp(rb.rotation, -60, 60);
             rb.MoveRotation(rb.rotation - rotation * 50 * moveSpeed * Time.fixedDeltaTime);
         }
+
     }
 
     private void FixedUpdate()
@@ -49,9 +51,9 @@ public class Player : MonoBehaviour
             transform.position = new Vector2(transform.position.x, screenBounds.y * -1);
         }
         transform.Translate(movement * moveSpeed * Time.fixedDeltaTime);
-        /*Vector2 objPos = transform.position;
-        objPos.x = Mathf.Clamp(objPos.x + movement.x, screenBounds.x, screenBounds.x * -1) - objPos.x;
-        objPos.y = Mathf.Clamp(objPos.y + movement.y, screenBounds.y, screenBounds.y * -1) - objPos.y;
-        transform.Translate(objPos * moveSpeed * Time.fixedDeltaTime);*/
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("toto");
     }
 }
