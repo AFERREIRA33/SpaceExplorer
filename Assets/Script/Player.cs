@@ -26,7 +26,13 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(Input.GetKey(KeyCode.Space))
+        {
+            moveSpeed = 9f;
+        } else
+        {
+            moveSpeed = 5f;
+        }
         movement.y = Input.GetAxis("Vertical");
         rotation = Input.GetAxis("Horizontal");
         if (rotation != 0)
