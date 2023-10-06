@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     Vector2 movement;
     float rotation;
     public PolygonCollider2D polygonCollider;
+    public int life = 3;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,11 +24,15 @@ public class Player : MonoBehaviour
 
         movement.y = Input.GetAxis("Vertical");
         rotation = Input.GetAxis("Horizontal");
-
+        rotation = Input.GetAxis("Horizontal");
         if (rotation != 0)
         {
             rb.rotation = Mathf.Clamp(rb.rotation, -60, 60);
             rb.MoveRotation(rb.rotation - rotation * 50 * moveSpeed * Time.fixedDeltaTime);
+        }
+        if(life < 0)
+        {
+            Debug.Log("Perdu");
         }
 
     }
@@ -54,6 +59,12 @@ public class Player : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("toto");
+        if (collision.name == "Finish")
+        {
+            Debug.Log(collision.name);
+        } else
+        {
+            life--;
+        }
     }
 }
