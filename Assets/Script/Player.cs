@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -12,9 +13,13 @@ public class Player : MonoBehaviour
     float rotation;
     public PolygonCollider2D polygonCollider;
     public int life = 3;
+    public Canvas EndScreen;
+    public TextMeshProUGUI loose;
+
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1f;
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height));
     }
 
@@ -24,7 +29,6 @@ public class Player : MonoBehaviour
 
         movement.y = Input.GetAxis("Vertical");
         rotation = Input.GetAxis("Horizontal");
-        rotation = Input.GetAxis("Horizontal");
         if (rotation != 0)
         {
             rb.rotation = Mathf.Clamp(rb.rotation, -60, 60);
@@ -32,9 +36,10 @@ public class Player : MonoBehaviour
         }
         if(life < 0)
         {
-            Debug.Log("Perdu");
+            Time.timeScale = 0f;
+            loose.text = "You loose skill issue !";
+            EndScreen.gameObject.SetActive(true);
         }
-
     }
 
     private void FixedUpdate()
@@ -61,7 +66,9 @@ public class Player : MonoBehaviour
     {
         if (collision.name == "Finish")
         {
-            Debug.Log(collision.name);
+            Time.timeScale = 0f;
+            loose.text = "You win GGWP !";
+            EndScreen.gameObject.SetActive(true);
         } else
         {
             life--;
